@@ -1,6 +1,6 @@
 # Expenses_tracker_app
 
-![My Image](Desktop-UI.png)
+![My Image](Desktop_UI.png)
 
 Steps:
 1. Clone the repo.
