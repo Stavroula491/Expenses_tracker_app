@@ -1,0 +1,4 @@
+ejs
+express
+body-parser
+pg

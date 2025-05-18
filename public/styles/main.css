@@ -1,0 +1,142 @@
+body{
+    background-color: #0D1B2A;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+}
+
+hr {
+  height: 2px;
+  background-color: #FFFFFF;
+  margin: 20px 0PX;
+}
+
+input{
+    border-radius: 10px;
+    height: 30px;
+    width: 300px;
+}
+
+label{
+    font-size: larger;
+}
+
+button{
+    border-radius: 10px;
+    height: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    transform: scale(1.02);
+}
+
+.expense-sub-input{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10%;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1/3fr 2/3fr;
+}
+
+.expense-form{
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    align-items: center;
+}
+
+.expense-input{
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    justify-content: center;
+    padding: 1%;
+    background-color: #2C3E50;
+    height: 120%;
+    width: 100%;
+}
+
+.date-picker{
+    margin-bottom: 4%;
+}
+
+.expense-table{
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    align-items: center;
+    justify-content: center;
+    gap: 10%;
+    padding: 2%;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 20px 0;
+    font-size: 16px;
+    min-width: 400px;
+    background-color: #1e2a38;
+    color: #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+  
+.styled-table thead {
+    background-color: #2c3e50;
+}
+  
+.styled-table th,
+.styled-table td {
+    padding: 12px 16px;
+    text-align: left;
+}
+  
+.styled-table tbody tr {
+    border-bottom: 1px solid #3a506b;
+}
+  
+.styled-table tbody tr:hover {
+    background-color: #34495e;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown{
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown label{
+    font-size: 16px;
+}
+
+.dropdown select{
+    border-radius: 10px;
+    font-size: larger;
+}
+
+.submit-btn {
+  background-color: #2563eb;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn:hover {
+  background-color: #2563eb;
+  transform: scale(1.03);
+}
+

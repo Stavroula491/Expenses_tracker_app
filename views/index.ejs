@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Date Picker Example</title>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="expense-form">
+      <form action="/add-expense" method="POST">
+       
+        <h1>Add Expense</h1>
+
+        <div class="expense-input">
+
+          <div class="dropdown">
+            <label for="category">Select Category</label>
+            <select name="category" id="category" required>
+            <% const categories = ['Shopping', 'Food', 'Mobile Phone', 'Entertainment', 'Education', 'Sport',
+              "Beauty", "Social", "Transportation", "Clothing", "Car", "House", "Snack", "Kids", "Other"]; %>
+            <% categories.forEach(function(cat) { %>
+            <option value="<%= cat %>"><%= cat %></option>
+            <% }); %>
+            </select>
+          </div>
+        
+          <div class="expense-sub-input">
+          <label>Add Title</label>
+          <input type="text" name="title" required placeholder="Expense title">
+          </div>
+
+          <div class="expense-sub-input">
+          <label>Amount</label>
+          <input type="text" name="amount" required placeholder="Amount">
+          </div>  
+
+          <div class="expense-sub-input">
+              <label>Date</label>
+              <input type="date" name="date" required>
+          </div>
+
+          <button class="submit-btn">Add Expense</button>
+
+        </div>
+
+      </form>
+    </div>
+    
+    <div class="expense-table">
+     
+      <div class="dropdown">
+            <label for="month">Select month</label>
+            <form action="/selectMonth" method="post">
+            <select name="month" id="month">
+              <option value="" disabled selected>Select a month</option>
+            <% const month = ['January', 'February', 'March', 'April', 'May', 'June',
+              "July", "August", "September", "October", "November", "December"]; %>
+            <% month.forEach(function(mon) { %>
+            <option value="<%= mon %>"><%= mon %></option>
+            <% }); %>
+            </select>
+
+            <button>See results</button>
+            </form>
+      </div>
+
+      <h1>
+        <%= current_month %>
+      </h1>
+
+      <canvas id="myPieChart" width="1000" height="370"></canvas>
+      <table id="dataTable" class="styled-table" border="1" cellpadding="8" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Title</th>
+              <th>Amount ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.forEach(element => { %>
+                <tr>
+                    <td><%= element.date %></td>
+                    <td><%= element.category %></td>
+                    <td><%= element.title %></td>
+                    <td><%= element.amount %></td>
+                </tr>
+            <% }); %>
+          </tbody>
+        </table>
+    </div>
+</div>
+
+
+    <script>
+        const categoryTotals = <%- JSON.stringify(chart_data) %>;
+
+        const labels = categoryTotals.map(item => item.category);
+        const data = categoryTotals.map(item => item.total_amount);
+
+        const ctx = document.getElementById('myPieChart').getContext('2d');
+        const myPieChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Expenses',
+              data: data,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.8)',    // Soft red
+                'rgba(54, 162, 235, 0.8)',    // Sky blue
+                'rgba(255, 206, 86, 0.8)',    // Sunny yellow
+                'rgba(75, 192, 192, 0.8)',    // Teal
+                'rgba(153, 102, 255, 0.8)',   // Purple
+                'rgba(255, 159, 64, 0.8)',    // Orange
+                'rgba(201, 203, 207, 0.8)',   // Gray
+                'rgba(0, 200, 83, 0.8)',      // Green
+                'rgba(255, 87, 34, 0.8)',     // Deep orange
+                'rgba(121, 85, 72, 0.8)',     // Brown
+                'rgba(0, 188, 212, 0.8)',     // Cyan
+                'rgba(233, 30, 99, 0.8)',     // Pink
+                'rgba(63, 81, 181, 0.8)',     // Indigo
+                'rgba(158, 158, 158, 0.8)',   // Medium gray
+                'rgba(139, 195, 74, 0.8)'     // Light green
+
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 0.8)',    // Soft red
+                'rgba(54, 162, 235, 0.8)',    // Sky blue
+                'rgba(255, 206, 86, 0.8)',    // Sunny yellow
+                'rgba(75, 192, 192, 0.8)',    // Teal
+                'rgba(153, 102, 255, 0.8)',   // Purple
+                'rgba(255, 159, 64, 0.8)',    // Orange
+                'rgba(201, 203, 207, 0.8)',   // Gray
+                'rgba(0, 200, 83, 0.8)',      // Green
+                'rgba(255, 87, 34, 0.8)',     // Deep orange
+                'rgba(121, 85, 72, 0.8)',     // Brown
+                'rgba(0, 188, 212, 0.8)',     // Cyan
+                'rgba(233, 30, 99, 0.8)',     // Pink
+                'rgba(63, 81, 181, 0.8)',     // Indigo
+                'rgba(158, 158, 158, 0.8)',   // Medium gray
+                'rgba(139, 195, 74, 0.8)'     // Light green
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: false,
+          }
+        });
+      </script>
+</body>
+</html>
