@@ -1,5 +1,7 @@
 # Expenses_tracker_app
 
+![My Image](Desktop-UI.png)
+
 Steps:
 1. Clone the repo.
 2. Install dependecies
