@@ -17,6 +17,7 @@ Steps:
 );
    '''
 4. In the index.js replace the following with your details
+'''
   const db = new pg.Client({
   user: 'username',
   host: 'localhost',
@@ -24,5 +25,6 @@ Steps:
   password: 'yourpassword',
   port: 5432,
   });
+'''
 
 5. Run the application.
