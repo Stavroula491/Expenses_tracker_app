@@ -5,78 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/main.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Date Picker Example</title>
+    <title>Expenses Tracker</title>
 </head>
 <body>
 
 <div class="container">
-    
+
     <div class="expense-form">
+      <h1>Add Expense</h1>
+     
+        <div class="custom-category">
+          <button class="submit-btn" id="submitNewCategory">
+            New category
+          </button>
+        </div>
+      
+        <div class="new-category-form">
+          
+          <form action="/newcategory" method="post">
+            <input id="newCategoryInput" type="text" name="newcategory" placeholder="Type a new category" hidden>
+            <button id="newCategoryDone" class="button-action" class="edit" type="submit" hidden><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                </svg></button>
+          </form>
+         
+
+          <button id="newCategoryStop" class="button-action" hidden><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+              </svg>
+          </button> 
+       
+          
+        </div>
+
+      <div class="epxense-form-inputs-and-button">
+    
       <form action="/add-expense" method="POST">
        
-        <h1>Add Expense</h1>
-
-        <div class="expense-input">
-
           <div class="dropdown">
             <label for="category">Select Category</label>
             <select name="category" id="category" required>
-            <% const categories = ['Shopping', 'Food', 'Mobile Phone', 'Entertainment', 'Education', 'Sport',
-              "Beauty", "Social", "Transportation", "Clothing", "Car", "House", "Snack", "Kids", "Other"]; %>
-            <% categories.forEach(function(cat) { %>
+              <option class="disabled-option" value="" disabled selected>Select Category</option>
+            <% const all_categories = categories.map(obj => Object.values(obj)[0]); %>
+            <% all_categories.forEach(function(cat) { %>
             <option value="<%= cat %>"><%= cat %></option>
             <% }); %>
             </select>
           </div>
-        
-          <div class="expense-sub-input">
+
+  
+          <div class="expense-sub-input title-input">
           <label>Add Title</label>
           <input type="text" name="title" required placeholder="Expense title">
           </div>
 
-          <div class="expense-sub-input">
+          <div class="expense-sub-input amount-input">
           <label>Amount</label>
           <input type="text" name="amount" required placeholder="Amount">
           </div>  
 
-          <div class="expense-sub-input">
+          <div class="expense-sub-input date-input">
               <label>Date</label>
               <input type="date" name="date" required>
           </div>
 
-          <button class="submit-btn">Add Expense</button>
-
-        </div>
-
+          <div class="submit-input">
+            <button class="submit-btn">Add Expense</button>
+          </div>
       </form>
+
+      </div>
+
     </div>
     
+
     <div class="expense-table">
      
-      <div class="dropdown">
-            <label for="month">Select month</label>
-            <form action="/selectMonth" method="post">
+      <div class="dropdown-month">
+
+            <label for="month">Select date</label>
+            <form action="/selectDate" method="post">
+
+            <select name="year" id="year">
+              <option class=""disabled-option value="" disabled selected>Select Year</option>
+            <% const years_list = year_list.map(obj => Object.values(obj)[0]); %>
+            <% years_list.forEach(function(yr) { %>
+            <option value="<%= yr %>"><%= yr %></option>
+            <% }); %>
+            </select>
+
             <select name="month" id="month">
-              <option value="" disabled selected>Select a month</option>
+              <option class="disabled-option" value="" disabled selected>Select a month</option>
             <% const month = ['January', 'February', 'March', 'April', 'May', 'June',
               "July", "August", "September", "October", "November", "December"]; %>
             <% month.forEach(function(mon) { %>
             <option value="<%= mon %>"><%= mon %></option>
             <% }); %>
             </select>
+            
 
-            <button>See results</button>
+            <button class="submit-btn">See results</button>
             </form>
       </div>
 
-      <h1>
-        <%= current_month %>
-      </h1>
-
-      <canvas id="myPieChart" width="1000" height="370"></canvas>
-      <table id="dataTable" class="styled-table" border="1" cellpadding="8" cellspacing="0">
+      <button class="submit-btn change-view" id="toggleBtn" onclick="toggleTables()">View spend by category</button>
+      <p><%= current_month %>
+          <%= current_year %></p>
+      <table id="table1" class="styled-table" border="1" cellpadding="8" cellspacing="0">
           <thead>
             <tr>
+              <th>Action</th>
               <th>Date</th>
               <th>Category</th>
               <th>Title</th>
@@ -86,15 +124,87 @@
           <tbody>
             <% data.forEach(element => { %>
                 <tr>
+                    <td>
+
+                      <div class="edit-buttons-container">
+
+                      <form action="/delete" method="post">
+                      <input type="hidden" name = "expensetoDelete" value="<%= element.id %>">
+                      <button class="button-action" button = "/delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                      </svg>
+                      </button> 
+                      </form>
+                      
+                      <button class="button-action" id="edit<%= element.id %>" class="edit" onclick="handler('<%=element.id%>')"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                      <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                      </svg>
+                      </button>
+
+                      </div>
+
+                    </td>
                     <td><%= element.date %></td>
                     <td><%= element.category %></td>
-                    <td><%= element.title %></td>
-                    <td><%= element.amount %></td>
+
+                    <td><span id="title<%=element.id%>"><%= element.title %></span>
+                    <form class="edit" action="/edit" method="post">
+                    <input type="hidden" name="updatedItemId" value="<%= element.id %>">
+                    <input id="input<%=element.id%>" type="text" name="updatedItemTitle" value="<%= element.title %>" autocomplete="off"
+                      autofocus="true" hidden="true" />
+                    <button class="button-action" id="done<%=element.id%>" class="edit" type="submit" hidden><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                    </svg></button>
+                    </td>
+
+                    <td><span id="amount<%= element.id %>"><%= element.amount %></span>
+                    <input type="hidden" name="updatedItemSpend" value="<%= element.id %>">
+                    <input id="input_amount<%=element.id%>" type="number" name="updatedItemAmount" value="<%= element.amount %>" autocomplete="off"
+                      autofocus="true" hidden="true" />
+                    <button class="button-action" id="done_amount<%=element.id%>" class="edit" type="submit" hidden><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                    </svg></button>
+                    </form>
+                    </td>
+                </tr>
+            <% }); %>
+          </tbody>
+        </table>
+
+        <table id="table2" style="display: none;" class="styled-table" border="1" cellpadding="8" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Total Amount ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% chart_data.forEach(element => { %>
+                <tr>
+                    <td><%= element.category %></td>
+                    <td><%= element.total_amount %></td>
                 </tr>
             <% }); %>
           </tbody>
         </table>
     </div>
+
+    <div class="pie-chart">
+      <div class="month-expense-title-div">
+        <p class="month-title">
+          <%= current_month %>
+          Expenses:
+          <%= monthly_spend[0].sum %>($)
+        </p>
+      </div>
+     
+      <canvas id="myPieChart" width="500" height="370"></canvas>
+    </div>
+
+    <div class="spend-monthly-trend">
+      <canvas id="myLineChart" width="500" height="370"></canvas>
+    </div>
+
 </div>
 
 
@@ -154,6 +264,69 @@
             responsive: false,
           }
         });
+
+        const lch = document.getElementById('myLineChart').getContext('2d');
+        const monthlabels = ['January', 'February', 'March', 'April', 'May', 'June',
+              "July", "August", "September", "October", "November", "December"];
+        const myLineChart = new Chart(lch, {
+          type: 'line',
+          data: {
+            labels: monthlabels,
+            datasets: [{
+            label: 'Monthly trend for <%= current_year %>',
+            data: [65, 59, 80, 81, 56, 55, 40, 35, 0, 50, 20, 30],
+            fill: false,
+            borderColor: 'rgb(37, 99, 235)',
+            tension: 0.1
+            }]
+          }
+        });
+
+        function toggleTables() {
+        const table1 = document.getElementById("table1");
+        const table2 = document.getElementById("table2");
+        const button = document.getElementById("toggleBtn")
+
+          if (table1.style.display === "none") {
+            table1.style.display = "table";
+            table2.style.display = "none";
+            button.textContent = "View spend by category";
+          } else {
+            table1.style.display = "none";
+            table2.style.display = "table";
+            button.textContent = "View detailed summary";
+          }
+        } 
+
+        function handler(id) {
+        document.getElementById("title" + id).setAttribute("hidden", true)
+        document.getElementById("edit" + id).setAttribute("hidden", true)
+        document.getElementById("amount" + id).setAttribute("hidden", true)
+        document.getElementById("done" + id).removeAttribute("hidden")
+        document.getElementById("input" + id).removeAttribute("hidden")
+        document.getElementById("done_amount" + id).removeAttribute("hidden")
+        document.getElementById("input_amount" + id).removeAttribute("hidden")
+
+        }
+
+        document.getElementById('submitNewCategory').addEventListener('click', () => {
+          document.getElementById('newCategoryInput').removeAttribute('hidden')
+          document.getElementById('newCategoryDone').removeAttribute('hidden')
+          document.getElementById('newCategoryStop').removeAttribute('hidden')
+        })
+
+        document.getElementById('newCategoryDone').addEventListener('click', () => {
+          document.getElementById('newCategoryInput').setAttribute('hidden', '')
+          document.getElementById('newCategoryDone').setAttribute('hidden', '')
+          document.getElementById('newCategoryStop').setAttribute('hidden', '')
+        })
+
+        document.getElementById('newCategoryStop').addEventListener('click', () => {
+          document.getElementById('newCategoryInput').setAttribute('hidden', '')
+          document.getElementById('newCategoryDone').setAttribute('hidden', '')
+          document.getElementById('newCategoryStop').setAttribute('hidden', '')
+        })
+
       </script>
 </body>
 </html>
