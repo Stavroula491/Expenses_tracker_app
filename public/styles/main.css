@@ -2,6 +2,8 @@ body{
     background-color: #0D1B2A;
     color: #FFFFFF;
     font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
 }
 
 hr {
@@ -35,45 +37,47 @@ button:hover {
     display: flex;
     flex-direction: column;
     margin-bottom: 10%;
+    /* height: 80%; */
 }
 
 .container{
     display: grid;
-    grid-template-columns: 1/3fr 2/3fr;
+    grid-template-columns: 2/3fr 1/3fr;
+    grid-template-rows:  2/3fr 1/3fr;
+    gap: 4%;
 }
 
 .expense-form{
-    display: flex;
-    flex-direction: column;
-    grid-column-start: 1;
-    grid-column-end: 1;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
     align-items: center;
-}
-
-.expense-input{
+    width: 100%;
+    background-color: #2C3E50;
+    border-radius: 20px;
+    height: 600px;
     display: flex;
     flex-direction: column;
-    border-radius: 20px;
+    align-items: center;
     justify-content: center;
-    padding: 1%;
-    background-color: #2C3E50;
-    height: 120%;
-    width: 100%;
-}
 
-.date-picker{
-    margin-bottom: 4%;
 }
 
 .expense-table{
     display: flex;
     flex-direction: column;
-    grid-column-start: 2;
-    grid-column-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 1;
+    grid-row-end: 1;
     align-items: center;
     justify-content: center;
-    gap: 10%;
     padding: 2%;
+    width: 100%;
+    background-color: #2C3E50;
+    border-radius: 20px;
+    height: auto;
 }
 
 .styled-table {
@@ -109,8 +113,30 @@ button:hover {
     transition: background-color 0.2s ease-in-out;
 }
 
+.pie-chart{
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    /* justify-content: center;
+    align-items: center; */
+    background-color: #2C3E50;
+    border-radius: 20px;
+    padding: 20px;
+}
+
 .dropdown{
     margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    width: 50%;
+}
+
+.dropdown-month{
     display: flex;
     flex-direction: column;
 }
@@ -119,10 +145,21 @@ button:hover {
     font-size: 16px;
 }
 
+
 .dropdown select{
     border-radius: 10px;
     font-size: larger;
 }
+
+.dropdown-month label{
+    font-size: 16px;
+}
+
+.dropdown-month select{
+    border-radius: 10px;
+    font-size: larger;
+}
+
 
 .submit-btn {
   background-color: #2563eb;
@@ -138,5 +175,93 @@ button:hover {
 .submit-btn:hover {
   background-color: #2563eb;
   transform: scale(1.03);
+}
+
+.change-view{
+    margin-top: 5%;
+    align-self:flex-start
+}
+
+.button-action{
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    background: linear-gradient(135deg, #333, #000);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.button-action:hover{
+    background: linear-gradient(135deg, #555, #222);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.edit-buttons-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20%;
+}
+
+.month-expense-title-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4%;
+}
+
+.month-title , .expense-title{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 3rem;
+  font-weight: 600;
+  color: white;
+  font-size: 180%;
+}
+
+.spend-monthly-trend{
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-gap: 2;
+    background-color: #2C3E50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    border-radius: 20px;
+    font-size: x-large;
+}
+
+.custom-category{
+    margin-bottom: 5%;
+}
+
+.new-category-form{
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: row;
+}
+
+#newCategoryInput{
+    width: 70%;
+}
+
+#newCategoryDone{
+    margin-left: 3%;
+}
+
+.epxense-form-inputs-and-button{
+    background-color: rgba(100, 100, 100, 0.1); /* light grey with 10% opacity */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 400px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* modern soft shadow */
+    backdrop-filter: blur(6px); /* optional: adds a frosted glass effect */
 }
 
